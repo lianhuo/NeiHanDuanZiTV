@@ -233,67 +233,67 @@
     <!--zxing-->
     <declare-styleable name="QRCodeView">
         <!-- 扫描框距离toolbar底部的距离，默认值为90dp -->
-        <attr name="qrcv_topOffset" format="dimension|reference" />
+        <attr name="qrcv_topOffset" format="dimension|reference"/>
         <!-- 扫描框边角线的宽度，默认值为3dp -->
-        <attr name="qrcv_cornerSize" format="dimension|reference" />
+        <attr name="qrcv_cornerSize" format="dimension|reference"/>
         <!-- 扫描框边角线的长度，默认值为20dp -->
-        <attr name="qrcv_cornerLength" format="dimension|reference" />
+        <attr name="qrcv_cornerLength" format="dimension|reference"/>
         <!-- 扫描框边角线的颜色，默认值为@android:color/white -->
-        <attr name="qrcv_cornerColor" format="color|reference" />
+        <attr name="qrcv_cornerColor" format="color|reference"/>
         <!-- 扫描框的宽度，默认值为200dp -->
-        <attr name="qrcv_rectWidth" format="dimension|reference" />
+        <attr name="qrcv_rectWidth" format="dimension|reference"/>
         <!-- 条码扫样式描框的高度，默认值为140dp -->
-        <attr name="qrcv_barcodeRectHeight" format="dimension|reference" />
+        <attr name="qrcv_barcodeRectHeight" format="dimension|reference"/>
         <!-- 除去扫描框，其余部分阴影颜色，默认值为#33FFFFFF -->
-        <attr name="qrcv_maskColor" format="color|reference" />
+        <attr name="qrcv_maskColor" format="color|reference"/>
         <!-- 扫描线的宽度，默认值为1dp -->
-        <attr name="qrcv_scanLineSize" format="dimension|reference" />
+        <attr name="qrcv_scanLineSize" format="dimension|reference"/>
         <!-- 扫描线的颜色，默认值为@android:color/white -->
-        <attr name="qrcv_scanLineColor" format="color|reference" />
+        <attr name="qrcv_scanLineColor" format="color|reference"/>
         <!-- 扫描线距离上下或者左右边框的间距，默认值为0dp -->
-        <attr name="qrcv_scanLineMargin" format="dimension|reference" />
+        <attr name="qrcv_scanLineMargin" format="dimension|reference"/>
         <!-- 是否显示默认的图片扫描线，默认值为false -->
-        <attr name="qrcv_isShowDefaultScanLineDrawable" format="boolean" />
+        <attr name="qrcv_isShowDefaultScanLineDrawable" format="boolean"/>
         <!-- 扫描线的图片资源，默认值为null -->
-        <attr name="qrcv_customScanLineDrawable" format="reference" />
+        <attr name="qrcv_customScanLineDrawable" format="reference"/>
         <!-- 扫描边框的宽度，默认值为1dp -->
-        <attr name="qrcv_borderSize" format="dimension|reference" />
+        <attr name="qrcv_borderSize" format="dimension|reference"/>
         <!-- 扫描边框的颜色，默认值为@android:color/white -->
-        <attr name="qrcv_borderColor" format="color|reference" />
+        <attr name="qrcv_borderColor" format="color|reference"/>
         <!-- 扫描线从顶部移动到底部的动画时间，默认值为1000 -->
-        <attr name="qrcv_animTime" format="integer" />
+        <attr name="qrcv_animTime" format="integer"/>
         <!-- 扫描框是否垂直居中，该属性为true时会忽略qrcv_topOffset属性，默认值为false -->
-        <attr name="qrcv_isCenterVertical" format="boolean" />
+        <attr name="qrcv_isCenterVertical" format="boolean"/>
         <!-- Toolbar的高度，当有设置qrcv_isCenterVertical属性时，通过该属性来修正有Toolbar时导致扫描框垂直居中的偏差，默认值为0dp -->
-        <attr name="qrcv_toolbarHeight" format="dimension|reference" />
+        <attr name="qrcv_toolbarHeight" format="dimension|reference"/>
         <!-- 是否是扫条形码，默认值为false -->
-        <attr name="qrcv_isBarcode" format="boolean" />
+        <attr name="qrcv_isBarcode" format="boolean"/>
         <!-- 扫描二维码时的提示文案，默认值为null -->
-        <attr name="qrcv_qrCodeTipText" format="string|reference" />
+        <attr name="qrcv_qrCodeTipText" format="string|reference"/>
         <!-- 扫描条码时的提示文案，默认值为null -->
-        <attr name="qrcv_barCodeTipText" format="string|reference" />
+        <attr name="qrcv_barCodeTipText" format="string|reference"/>
         <!-- 提示文案字体大小，默认值为14sp -->
-        <attr name="qrcv_tipTextSize" format="dimension|reference" />
+        <attr name="qrcv_tipTextSize" format="dimension|reference"/>
         <!-- 提示文案颜色，默认值为@android:color/white -->
-        <attr name="qrcv_tipTextColor" format="color|reference" />
+        <attr name="qrcv_tipTextColor" format="color|reference"/>
         <!-- 提示文案是否在扫描框的底部，默认值为false -->
-        <attr name="qrcv_isTipTextBelowRect" format="boolean" />
+        <attr name="qrcv_isTipTextBelowRect" format="boolean"/>
         <!-- 提示文案与扫描框之间的间距，默认值为20dp -->
-        <attr name="qrcv_tipTextMargin" format="dimension|reference" />
+        <attr name="qrcv_tipTextMargin" format="dimension|reference"/>
         <!-- 是否把提示文案作为单行显示，默认值为false -->
-        <attr name="qrcv_isShowTipTextAsSingleLine" format="boolean" />
+        <attr name="qrcv_isShowTipTextAsSingleLine" format="boolean"/>
         <!-- 是否显示提示文案的背景，默认值为false -->
-        <attr name="qrcv_isShowTipBackground" format="boolean" />
+        <attr name="qrcv_isShowTipBackground" format="boolean"/>
         <!-- 提示文案的背景色，默认值为#22000000 -->
-        <attr name="qrcv_tipBackgroundColor" format="color|reference" />
+        <attr name="qrcv_tipBackgroundColor" format="color|reference"/>
         <!-- 扫描线是否来回移动，默认值为true -->
-        <attr name="qrcv_isScanLineReverse" format="boolean" />
+        <attr name="qrcv_isScanLineReverse" format="boolean"/>
         <!-- 是否显示默认的网格图片扫描线，默认值为false -->
-        <attr name="qrcv_isShowDefaultGridScanLineDrawable" format="boolean" />
+        <attr name="qrcv_isShowDefaultGridScanLineDrawable" format="boolean"/>
         <!-- 扫描线的网格图片资源，默认值为null -->
-        <attr name="qrcv_customGridScanLineDrawable" format="reference" />
+        <attr name="qrcv_customGridScanLineDrawable" format="reference"/>
         <!-- 是否只识别扫描框区域的二维码，默认值为false -->
-        <attr name="qrcv_isOnlyDecodeScanBoxArea" format="boolean" />
+        <attr name="qrcv_isOnlyDecodeScanBoxArea" format="boolean"/>
     </declare-styleable>
     <!--zxing-->
     <!--cv-->
@@ -303,4 +303,70 @@
         <attr name="border_color" format="color"/>
     </declare-styleable>
     <!--cv-->
+
+
+    <!--轮播广告-->
+    <declare-styleable name="BGABanner">
+        <!-- 指示点容器背景 -->
+        <attr name="banner_pointContainerBackground" format="reference|color"/>
+        <!-- 指示点背景 -->
+        <attr name="banner_pointDrawable" format="reference"/>
+        <!-- 指示点容器左右内间距 -->
+        <attr name="banner_pointContainerLeftRightPadding" format="dimension"/>
+        <!-- 指示点上下外间距 -->
+        <attr name="banner_pointTopBottomMargin" format="dimension"/>
+        <!-- 指示点左右外间距 -->
+        <attr name="banner_pointLeftRightMargin" format="dimension"/>
+        <!-- 指示器的位置 -->
+        <attr name="banner_indicatorGravity">
+            <flag name="top" value="0x30"/>
+            <flag name="bottom" value="0x50"/>
+            <flag name="left" value="0x03"/>
+            <flag name="right" value="0x05"/>
+            <flag name="center_horizontal" value="0x01"/>
+        </attr>
+        <!-- 是否开启自动轮播 -->
+        <attr name="banner_pointAutoPlayAble" format="boolean"/>
+        <!-- 自动轮播的时间间隔 -->
+        <attr name="banner_pointAutoPlayInterval" format="integer"/>
+        <!-- 页码切换过程的时间长度 -->
+        <attr name="banner_pageChangeDuration" format="integer"/>
+        <!-- 页面切换的动画效果 -->
+        <attr name="banner_transitionEffect" format="enum">
+            <enum name="defaultEffect" value="0"/>
+            <enum name="alpha" value="1"/>
+            <enum name="rotate" value="2"/>
+            <enum name="cube" value="3"/>
+            <enum name="flip" value="4"/>
+            <enum name="accordion" value="5"/>
+            <enum name="zoomFade" value="6"/>
+            <enum name="fade" value="7"/>
+            <enum name="zoomCenter" value="8"/>
+            <enum name="zoomStack" value="9"/>
+            <enum name="stack" value="10"/>
+            <enum name="depth" value="11"/>
+            <enum name="zoom" value="12"/>
+        </attr>
+        <!-- 提示文案的文字颜色 -->
+        <attr name="banner_tipTextColor" format="reference|color"/>
+        <!-- 提示文案的文字大小 -->
+        <attr name="banner_tipTextSize" format="dimension"/>
+        <!-- 加载网络数据时覆盖在 BGABanner 最上层的占位图 -->
+        <attr name="banner_placeholderDrawable" format="reference"/>
+        <!-- 是否是数字指示器 -->
+        <attr name="banner_isNumberIndicator" format="boolean"/>
+        <!-- 数字指示器文字颜色 -->
+        <attr name="banner_numberIndicatorTextColor" format="reference|color"/>
+        <!-- 数字指示器文字大小 -->
+        <attr name="banner_numberIndicatorTextSize" format="dimension"/>
+        <!-- 数字指示器背景 -->
+        <attr name="banner_numberIndicatorBackground" format="reference"/>
+        <!-- 当只有一页数据时是否显示指示器，默认值为 false -->
+        <attr name="banner_isNeedShowIndicatorOnOnlyOnePage" format="boolean"/>
+        <!-- 自动轮播区域距离 BGABanner 底部的距离 -->
+        <attr name="banner_contentBottomMargin" format="dimension"/>
+        <!-- 占位图缩放模式 -->
+        <attr name="android:scaleType"/>
+    </declare-styleable>
+    <!--轮播广告-->
 </resources>

@@ -7,7 +7,9 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.zwy.neihan.app.utils.DBUtils;
 import com.zwy.neihan.mvp.contract.SplashContract;
+import com.zwy.neihan.mvp.ui.activity.GuideActivity;
 import com.zwy.neihan.mvp.ui.activity.MainActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -50,9 +52,12 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
         // TODO: 2017/8/26 休眠1000ms后判断是否进入首页 或者展示引导页面
         Schedulers.newThread().createWorker().schedule(() -> {
             Timber.d("一秒后跳转页面");
+            final Class[] mClass = {MainActivity.class};
             AndroidSchedulers.mainThread().createWorker().schedule(() -> {
                 Timber.d("开始执行");
-                Intent intent = new Intent(mApplication, MainActivity.class);
+                if (DBUtils.getInstance(mApplication).isFirstEnterApp())
+                    mClass[0] = GuideActivity.class;
+                Intent intent = new Intent(mApplication, mClass[0]);
                 mRootView.launchActivity(intent);
                 mRootView.killMyself();
             });

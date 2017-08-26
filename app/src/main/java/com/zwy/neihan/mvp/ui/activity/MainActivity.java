@@ -8,13 +8,13 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.zwy.neihan.R;
+import com.zwy.neihan.app.utils.DBUtils;
+import com.zwy.neihan.dbtabs.User;
 import com.zwy.neihan.di.component.DaggerMainComponent;
 import com.zwy.neihan.di.module.MainModule;
 import com.zwy.neihan.mvp.contract.MainContract;
 import com.zwy.neihan.mvp.presenter.MainPresenter;
-
-import com.zwy.neihan.R;
-
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        DBUtils.getInstance(getApplication()).insertUser(new User("我是一个测试的用户"));
     }
 
 

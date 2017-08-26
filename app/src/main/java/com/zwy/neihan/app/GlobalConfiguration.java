@@ -33,6 +33,8 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.zwy.neihan.NeiHanConfig;
 import com.zwy.neihan.R;
+import com.zwy.neihan.app.utils.DBUtils;
+import com.zwy.neihan.greendao.DaoMaster;
 import com.zwy.neihan.mvp.model.api.Api;
 
 import org.json.JSONException;
@@ -205,7 +207,7 @@ public final class GlobalConfiguration implements ConfigModule {
                     ButterKnife.setDebug(true);
                 }
                 //leakCanary内存泄露检查
-               ArmsUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), NeiHanConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+                ArmsUtils.obtainAppComponentFromContext(application).extras().put(RefWatcher.class.getName(), NeiHanConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
 
                 //初始化图片选择工具
                 //初始化图片选择后的裁剪工具
@@ -217,6 +219,11 @@ public final class GlobalConfiguration implements ConfigModule {
                     e.printStackTrace();
                     Timber.e("图片裁剪相关工具初始化失败");
                 }
+
+                //初始化数据库
+                DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(context, NeiHanConfig.DBNAME);
+                ArmsUtils.obtainAppComponentFromContext(application).extras().put(NeiHanConfig.DBNAME, new DaoMaster(openHelper.getWritableDb()).newSession());
+                DBUtils.getInstance(application);
             }
 
             @Override

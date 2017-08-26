@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'//retrolambda语法
 apply plugin: 'com.mb14.configdroid'//config文件生成
 apply plugin: 'webpcompress'//webp图片压缩
+apply plugin: 'org.greenrobot.greendao'//数据库相关
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -50,6 +51,7 @@ android {
         prop "NETWORK_TIME_OUT", rootProject.ext.android["NETWORK_TIME_OUT"]
         prop "NETWORK_RETRY_TIMES", rootProject.ext.android["NETWORK_RETRY_TIMES"]
         prop "NETWORK_RETRY_DELAYSECOND", rootProject.ext.android["NETWORK_RETRY_DELAYSECOND"]
+        prop "DBNAME",rootProject.ext.android["DBNAME"]
         buildTypes {
             debug {
                 prop "LOG_DEBUG", true
@@ -61,6 +63,13 @@ android {
                 prop "USE_CANARY", false
             }
         }
+    }
+    greendao {
+        schemaVersion 2//数据库版本号
+        daoPackage rootProject.ext.android["PACKAGENAME"]+'.greendao'//设置DaoMaster、DaoSession、Dao包名
+        targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+        //targetGenDirTestA：设置生成单元测试目录
+        //generateTests：设置自动生成单元测试用例
     }
 
     //开启webp图片压缩时 开启如下任务
@@ -102,6 +111,8 @@ dependencies {
         exclude module: 'butterknife-annotations'
     }
     compile rootProject.ext.dependencies["paginate"]
+    compile rootProject.ext.dependencies["greendao"]
+
     //arms
     compile project(':MvpTools')
 //    compile 'me.jessyan:arms:2.1.5'

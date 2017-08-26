@@ -9,6 +9,7 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.6.0'//lambda
         classpath 'com.mb14:configdroid:1.1.0'//configdroid文件生成
         classpath 'com.chuyun923.android.plugin:webpcompress:3.0.0'//webp图片压缩
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.1'//数据库
     }
 }
 
