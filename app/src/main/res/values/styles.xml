@@ -17,7 +17,7 @@
     </style>
     <!--应用程序启动页面，消除app启动的白屏页面-->
     <style name="AppSplash" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:windowBackground">@mipmap/splash</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>

@@ -39,7 +39,7 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_100"
+        android:layout_height="@dimen/px_95"
         android:layout_marginTop="@dimen/px_100"
         android:background="@color/bg_category_strip_day">
 
@@ -50,12 +50,12 @@
             android:layout_marginLeft="@dimen/px_20"
             android:layout_marginRight="@dimen/px_20"
             tl:tl_indicator_color="@color/bg_category_tab_indicator_day"
-            tl:tl_indicator_corner_radius="@dimen/dp_3"
+            tl:tl_indicator_corner_radius="@dimen/dp_8"
             tl:tl_indicator_height="@dimen/dp_30"
             tl:tl_indicator_style="BLOCK"
             tl:tl_textSelectColor="@color/white"
             tl:tl_textUnselectColor="@color/simple_333333"
-            tl:tl_textsize="@dimen/sp_17"/>
+            tl:tl_textsize="@dimen/sp_13"/>
     </LinearLayout>
 
     <com.jess.arms.widget.boxing.impl.view.HackyViewPager
