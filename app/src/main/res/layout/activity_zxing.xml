@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="match_parent"
+                                       android:background="@color/bg_main"
+                                       android:orientation="vertical">
+
+    <com.jess.arms.widget.zxingqrcode.zxing.ZXingView
+        android:id="@+id/zxingview"
+        style="@style/layout_match_parent"
+        app:qrcv_animTime="500"
+
+        app:qrcv_barCodeTipText="@string/qrcode_text_1"
+        app:qrcv_barcodeRectHeight="@dimen/dp_124"
+        app:qrcv_borderColor="@android:color/white"
+        app:qrcv_borderSize="@dimen/dp_1"
+        app:qrcv_cornerColor="@color/colorPrimaryDark"
+        app:qrcv_cornerLength="@dimen/dp_20"
+        app:qrcv_cornerSize="@dimen/dp_3"
+        app:qrcv_customScanLineDrawable="@drawable/scan_icon_scanline"
+        app:qrcv_isBarcode="false"
+        app:qrcv_isCenterVertical="false"
+        app:qrcv_isOnlyDecodeScanBoxArea="true"
+        app:qrcv_isScanLineReverse="true"
+        app:qrcv_isShowDefaultGridScanLineDrawable="false"
+        app:qrcv_isShowDefaultScanLineDrawable="true"
+        app:qrcv_isShowTipBackground="true"
+        app:qrcv_isShowTipTextAsSingleLine="false"
+        app:qrcv_isTipTextBelowRect="true"
+        app:qrcv_maskColor="#33FFFFFF"
+        app:qrcv_qrCodeTipText="@string/qrcode_text_2"
+        app:qrcv_rectWidth="@dimen/dp_200"
+        app:qrcv_scanLineColor="@color/colorPrimaryDark"
+        app:qrcv_scanLineMargin="0dp"
+        app:qrcv_scanLineSize="0.5dp"
+        app:qrcv_tipTextColor="@android:color/white"
+        app:qrcv_tipTextSize="@dimen/sp_12"
+        app:qrcv_toolbarHeight="@dimen/dp_55"
+        app:qrcv_topOffset="@dimen/dp_100"/>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        style="@style/layout_wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/dp_100"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_open"
+            style="@style/layout_wrap_content"
+            android:text="@string/qrcode_text_open"/>
+
+        <Button
+            android:id="@+id/bt_close"
+            style="@style/layout_wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/qrcode_text_close"/>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoRelativeLayout>

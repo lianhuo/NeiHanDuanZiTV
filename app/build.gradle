@@ -1,0 +1,113 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'//retrolambda语法
+apply plugin: 'com.mb14.configdroid'//config文件生成
+apply plugin: 'webpcompress'//webp图片压缩
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId rootProject.ext.android["PACKAGENAME"]
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        abortOnError false
+    }
+
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    configdroid {
+        className rootProject.ext.android["CONFIGNAME"]
+        packageName rootProject.ext.android["PACKAGENAME"]
+        access "public" // Options: public, package-private
+
+        prop "NETWORK_TIME_OUT", rootProject.ext.android["NETWORK_TIME_OUT"]
+        prop "NETWORK_RETRY_TIMES", rootProject.ext.android["NETWORK_RETRY_TIMES"]
+        prop "NETWORK_RETRY_DELAYSECOND", rootProject.ext.android["NETWORK_RETRY_DELAYSECOND"]
+        buildTypes {
+            debug {
+                prop "LOG_DEBUG", true
+                prop "USE_CANARY", true
+            }
+
+            release {
+                prop "LOG_DEBUG", false
+                prop "USE_CANARY", false
+            }
+        }
+    }
+
+    //开启webp图片压缩时 开启如下任务
+//    webpCompress {
+//        q = 80  //压缩比例 0～100，100是无损压缩，默认80
+//        skipDebug = true //debug下是否开启webp压缩 默认不开启
+//        cwebpPath = "/Users/zhaowenyun/Documents/libwebp-0.6.0-rc3-mac-10.12/bin/cwebp" //cwebp命令的路径
+//        openLog = true  //是否打开log
+//        filterAlpha = true //是否过滤有透明通道的图片
+//        whiteList = [
+//                "notify_panel_notification_icon_bg.png"
+//        ]
+//
+//        //配置压缩白名单
+//    }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //support
+    compile(rootProject.ext.dependencies["cardview-v7"]) {
+        exclude module: 'support-annotations'
+    }
+    //tools
+    provided rootProject.ext.dependencies["javax.annotation"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    compile rootProject.ext.dependencies["progressmanager"]
+    compile rootProject.ext.dependencies["retrofit-url-manager"]
+    //view
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'butterknife-annotations'
+    }
+    compile rootProject.ext.dependencies["paginate"]
+    //arms
+    compile project(':MvpTools')
+//    compile 'me.jessyan:arms:2.1.5'
+    //test
+    testCompile rootProject.ext.dependencies["junit"]
+    debugCompile rootProject.ext.dependencies["canary-debug"]
+    releaseCompile rootProject.ext.dependencies["canary-release"]
+    testCompile rootProject.ext.dependencies["canary-release"]
+}

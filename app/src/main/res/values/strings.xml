@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">内涵段子TV</string>
+
+    <string name="default_text">套餐生成的默认布局</string>
+    <string name="qrcode_text_1">将条码放入框内，即可自动扫描</string>
+    <string name="qrcode_text_2">将二维码/条码放入框内，即可自动扫描</string>
+    <string name="qrcode_text_open">开灯</string>
+    <string name="qrcode_text_close">关灯</string>
+
+
+</resources>
