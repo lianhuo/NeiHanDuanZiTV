@@ -253,6 +253,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     /** 创建并添加tab */
     private void addTab(final int position, String title, View tabView) {
         TextView tv_tab_title = (TextView) tabView.findViewById(R.id.tv_tab_title);
+//        tv_tab_title.setTextColor(getResources().getColor(R.color.textColor_actionsheet_msg));
         if (tv_tab_title != null) {
             if (title != null) tv_tab_title.setText(title);
         }

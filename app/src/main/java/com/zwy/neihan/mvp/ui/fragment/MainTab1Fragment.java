@@ -3,20 +3,30 @@ package com.zwy.neihan.mvp.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.jess.arms.widget.boxing.impl.view.HackyViewPager;
 import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.tablayout.SlidingTabLayout;
+import com.jess.arms.widget.tablayout.listener.OnTabSelectListener;
+import com.zwy.neihan.R;
 import com.zwy.neihan.di.component.DaggerMainTab1Component;
 import com.zwy.neihan.di.module.MainTab1Module;
 import com.zwy.neihan.mvp.contract.MainTab1Contract;
 import com.zwy.neihan.mvp.presenter.MainTab1Presenter;
+import com.zwy.neihan.mvp.ui.adapter.PageAdapter;
 
-import com.zwy.neihan.R;
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -24,12 +34,21 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================================
  * 创建时间:2017-8-26 23:40:51
  * 创建人:Alan
- * 文件描述：xxxx视图页面-fragment
+ * 文件描述：首页
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
 public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements MainTab1Contract.View, OnShowLoadingListener {
 
+
+    @BindView(R.id.ab_iv_user)
+    ImageView mAbIvUser;
+    @BindView(R.id.iv_ab_publish)
+    ImageView mIvAbPublish;
+    @BindView(R.id.tab)
+    SlidingTabLayout mTab;
+    @BindView(R.id.vp_home)
+    HackyViewPager mVp;
 
     public static MainTab1Fragment newInstance() {
         MainTab1Fragment fragment = new MainTab1Fragment();
@@ -53,7 +72,36 @@ public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        String[] strs = new String[]{"推荐", "视频", "段友秀", "图片", "段子", "订阅", "精华", "同城", "段友圈"};
 
+        fragments.add(HomeObjectTabFragment.newInstance(0));//推荐
+        fragments.add(HomeObjectTabFragment.newInstance(1));//视频
+        fragments.add(HomeObjectTabFragment.newInstance(2));//段友秀
+        fragments.add(HomeObjectTabFragment.newInstance(3));//图片
+        fragments.add(HomeObjectTabFragment.newInstance(4));//段子
+
+        fragments.add(SubscribeFragment.newInstance());//订阅
+        fragments.add(EssenceFragment.newInstance());//精华
+        fragments.add(CityWideFragment.newInstance());//同城
+        fragments.add(FriendsCircleFragment.newInstance());//段友圈
+
+        PageAdapter pageAdapter = new PageAdapter(getActivity().getSupportFragmentManager(), fragments, strs);
+
+        mVp.setAdapter(pageAdapter);
+
+        mTab.setViewPager(mVp, strs);
+        mTab.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                mVp.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+            }
+        });
+        mVp.setCurrentItem(0);
     }
 
     /**
@@ -106,5 +154,15 @@ public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements
     @Override
     public void onCancel() {
 
+    }
+
+    @OnClick({R.id.ab_iv_user, R.id.iv_ab_publish})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ab_iv_user:
+                break;
+            case R.id.iv_ab_publish:
+                break;
+        }
     }
 }

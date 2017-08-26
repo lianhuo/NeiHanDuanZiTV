@@ -2,7 +2,7 @@
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                      android:layout_width="match_parent"
                                      android:layout_height="match_parent"
-                                     android:background="@color/bg_main"
+                                     android:background="@color/main_bg"
                                      android:orientation="vertical">
 
 
@@ -10,5 +10,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="我的"/>
+        android:text="消息"/>
 </com.zhy.autolayout.AutoLinearLayout>

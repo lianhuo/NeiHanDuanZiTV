@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.widget.TabHost;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.jess.arms.widget.boxing.impl.view.HackyViewPager;
 import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
 import com.jess.arms.widget.tablayout.listener.CustomTabEntity;
 import com.zwy.neihan.R;
@@ -41,7 +40,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
 
     @BindView(R.id.vp)
-    ViewPager mVp;
+    HackyViewPager mVp;
     @BindView(R.id.tablayout)
     MyTabHost mTablayout;
 
@@ -63,7 +62,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void initData(Bundle savedInstanceState) {
         DBUtils.getInstance(getApplication()).insertUser(new User("我是一个测试的用户"));
-        mPresenter.initData(mTablayout,mVp);
+        mPresenter.initData(mTablayout, mVp);
     }
 
 
@@ -101,6 +100,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void onCancel() {
 
     }
+
     /**
      * 设置适配器
      *
@@ -157,5 +157,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         } else {
             ArmsUtils.exitApp();
         }
+    }
+
+    public void setViewPagerLocked(boolean b) {
+        mVp.setLocked(b);
     }
 }
