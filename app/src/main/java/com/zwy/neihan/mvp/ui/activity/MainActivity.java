@@ -3,11 +3,16 @@ package com.zwy.neihan.mvp.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
+import android.widget.TabHost;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.tablayout.listener.CustomTabEntity;
 import com.zwy.neihan.R;
 import com.zwy.neihan.app.utils.DBUtils;
 import com.zwy.neihan.dbtabs.User;
@@ -15,6 +20,12 @@ import com.zwy.neihan.di.component.DaggerMainComponent;
 import com.zwy.neihan.di.module.MainModule;
 import com.zwy.neihan.mvp.contract.MainContract;
 import com.zwy.neihan.mvp.presenter.MainPresenter;
+import com.zwy.neihan.mvp.ui.adapter.MyPagerAdapter;
+import com.zwy.neihan.mvp.ui.widget.MyTabHost;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -28,6 +39,11 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  */
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, OnShowLoadingListener {
 
+
+    @BindView(R.id.vp)
+    ViewPager mVp;
+    @BindView(R.id.tablayout)
+    MyTabHost mTablayout;
 
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
@@ -47,6 +63,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void initData(Bundle savedInstanceState) {
         DBUtils.getInstance(getApplication()).insertUser(new User("我是一个测试的用户"));
+        mPresenter.initData(mTablayout,mVp);
     }
 
 
@@ -84,5 +101,61 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void onCancel() {
 
     }
+    /**
+     * 设置适配器
+     *
+     * @param adapter
+     */
+    @Override
+    public void setAdapter(MyPagerAdapter adapter) {
+        mVp.setAdapter(adapter);
+    }
 
+    /**
+     * 设置tab页数据源
+     *
+     * @param mTabEntities
+     */
+    @Override
+    public void setTabData(ArrayList<CustomTabEntity> mTabEntities) {
+        mTablayout.setTabData(mTabEntities);
+    }
+
+    /**
+     * 获取适配器管理器
+     *
+     * @return
+     */
+    @Override
+    public FragmentManager getManager() {
+        return getSupportFragmentManager();
+    }
+
+
+    private long exitTime = 0;
+
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {
+                this.exitApp();
+            }
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+
+    /**
+     * 退出程序
+     */
+    private void exitApp() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            showMessage("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            ArmsUtils.exitApp();
+        }
+    }
 }

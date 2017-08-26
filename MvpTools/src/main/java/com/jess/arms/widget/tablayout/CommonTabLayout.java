@@ -39,9 +39,9 @@ import java.util.ArrayList;
 /** 没有继承HorizontalScrollView不能滑动,对于ViewPager无依赖 */
 public class CommonTabLayout extends FrameLayout implements ValueAnimator.AnimatorUpdateListener {
     private Context mContext;
-    private ArrayList<CustomTabEntity> mTabEntitys = new ArrayList<>();
-    private LinearLayout mTabsContainer;
-    private int mCurrentTab;
+    protected ArrayList<CustomTabEntity> mTabEntitys = new ArrayList<>();
+    protected LinearLayout mTabsContainer;
+    protected int mCurrentTab;
     private int mLastTab;
     private int mTabCount;
     /** 用于绘制显示器 */
@@ -58,8 +58,8 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
     private int mIndicatorStyle = STYLE_NORMAL;
 
     private float mTabPadding;
-    private boolean mTabSpaceEqual;
-    private float mTabWidth;
+    protected boolean mTabSpaceEqual;
+    protected float mTabWidth;
 
     /** indicator */
     private int mIndicatorColor;
@@ -233,7 +233,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
     }
 
     /** 创建并添加tab */
-    private void addTab(final int position, View tabView) {
+    protected void addTab(final int position, View tabView) {
         TextView tv_tab_title = (TextView) tabView.findViewById(R.id.tv_tab_title);
         tv_tab_title.setText(mTabEntitys.get(position).getTabTitle());
         ImageView iv_tab_icon = (ImageView) tabView.findViewById(R.id.iv_tab_icon);
@@ -897,7 +897,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         return tipView;
     }
 
-    private OnTabSelectListener mListener;
+    protected OnTabSelectListener mListener;
 
     public void setOnTabSelectListener(OnTabSelectListener listener) {
         this.mListener = listener;

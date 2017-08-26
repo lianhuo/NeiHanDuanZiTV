@@ -6,10 +6,10 @@
             <solid android:color="@color/bg_splash" />
         </shape>
     </item>
-    <item android:top="120.0dip">
+    <item android:top="150.0dip">
         <bitmap android:gravity="top" android:src="@drawable/splash_slogan" />
     </item>
-    <item android:top="420.0dip">
+    <item android:top="450.0dip">
         <bitmap android:gravity="top" android:src="@drawable/splash_copyright" />
     </item>
     <item android:left="30.0dip" android:top="30.0dip">

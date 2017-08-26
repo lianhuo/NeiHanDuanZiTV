@@ -81,8 +81,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.GuideActivity"
+        <activity
+            android:name=".mvp.ui.activity.GuideActivity"
             android:theme="@style/Activity_NoActionbar_All">
+        </activity>
+        <activity android:name=".mvp.ui.activity.SenderActivity">
         </activity>
     </application>
 
