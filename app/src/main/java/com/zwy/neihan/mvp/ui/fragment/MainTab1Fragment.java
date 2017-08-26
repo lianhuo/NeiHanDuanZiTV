@@ -49,6 +49,8 @@ public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements
     SlidingTabLayout mTab;
     @BindView(R.id.vp_home)
     HackyViewPager mVp;
+    @BindView(R.id.iv_refresh)
+    ImageView mIvRefresh;
 
     public static MainTab1Fragment newInstance() {
         MainTab1Fragment fragment = new MainTab1Fragment();
@@ -156,12 +158,17 @@ public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements
 
     }
 
-    @OnClick({R.id.ab_iv_user, R.id.iv_ab_publish})
+    @OnClick({R.id.ab_iv_user, R.id.iv_ab_publish, R.id.iv_refresh})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ab_iv_user:
+                showMessage("用户个人中心");
                 break;
             case R.id.iv_ab_publish:
+                showMessage("投稿");
+                break;
+            case R.id.iv_refresh:
+                showMessage("刷新");
                 break;
         }
     }
