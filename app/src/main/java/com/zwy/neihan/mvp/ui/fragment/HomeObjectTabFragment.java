@@ -17,6 +17,7 @@ import com.zwy.neihan.R;
 import com.zwy.neihan.di.component.DaggerHomeObjectTabComponent;
 import com.zwy.neihan.di.module.HomeObjectTabModule;
 import com.zwy.neihan.mvp.contract.HomeObjectTabContract;
+import com.zwy.neihan.mvp.model.entity.HomeTabBean;
 import com.zwy.neihan.mvp.presenter.HomeObjectTabPresenter;
 
 import butterknife.BindView;
@@ -37,17 +38,17 @@ public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> 
 
     @BindView(R.id.tv)
     TextView mTv;
-    private int indexTag = 0;//1-5页的容器索引
+    private HomeTabBean homeTabBean;
 
-    public static HomeObjectTabFragment newInstance(int indexTag) {
-        HomeObjectTabFragment fragment = new HomeObjectTabFragment(indexTag);
+    public static HomeObjectTabFragment newInstance(HomeTabBean homeTabBean) {
+        HomeObjectTabFragment fragment = new HomeObjectTabFragment(homeTabBean);
         return fragment;
     }
 
 
     @SuppressLint("ValidFragment")
-    private HomeObjectTabFragment(int indexTag) {
-        this.indexTag = indexTag;
+    private HomeObjectTabFragment(HomeTabBean homeTabBean) {
+        this.homeTabBean = homeTabBean;
     }
 
     @Override
@@ -67,7 +68,7 @@ public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> 
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mTv.setText(String.valueOf("页面索引值:" + indexTag));
+        mTv.setText(String.valueOf( homeTabBean.getName()));
     }
 
     /**

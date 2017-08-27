@@ -3,18 +3,19 @@ package com.zwy.neihan.mvp.model;
 import android.app.Application;
 
 import com.google.gson.Gson;
+import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
+import com.zwy.neihan.mvp.contract.MainTab1Contract;
+import com.zwy.neihan.mvp.model.api.service.CommonService;
+import com.zwy.neihan.mvp.model.entity.HomeTabBean;
 
-import com.jess.arms.di.scope.ActivityScope;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import com.jess.arms.widget.tablayout.bean.TabEntity;
-import com.jess.arms.widget.tablayout.listener.CustomTabEntity;
-import com.zwy.neihan.mvp.contract.MainTab1Contract;
-
-import java.util.ArrayList;
+import io.reactivex.Observable;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
 
 @ActivityScope
@@ -36,8 +37,17 @@ public class MainTab1Model extends BaseModel implements MainTab1Contract.Model {
         this.mApplication = null;
     }
 
+    /**
+     * 获取首页tabs
+     *
+     * @return
+     */
     @Override
-    public String[] getTabs() {
-        return new String[]{"推荐","视频","段友秀","图片","段子","订阅","精华","同城","段友圈"};
+    public Observable<ArrayList<HomeTabBean>> getTabs() {
+        RetrofitUrlManager.getInstance().putDomain("tabs", "http://lf.snssdk.com");
+        return mRepositoryManager.obtainRetrofitService(CommonService.class).getHometabs()
+                .map(arrayListBaseJson -> {
+                    return arrayListBaseJson.getData();
+                });
     }
 }

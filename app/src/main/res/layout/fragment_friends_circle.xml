@@ -10,5 +10,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="段友圈"/>
+        android:text="游戏"/>
 </com.zhy.autolayout.AutoLinearLayout>

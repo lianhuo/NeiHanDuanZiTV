@@ -84,6 +84,7 @@ public class GlobalConfigModule {
             }
         }
         return mApiUrl == null ? HttpUrl.parse("https://api.github.com/") : mApiUrl;
+
     }
 
 

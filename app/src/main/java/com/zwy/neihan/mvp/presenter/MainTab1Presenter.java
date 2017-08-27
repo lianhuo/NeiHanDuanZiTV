@@ -1,17 +1,31 @@
 package com.zwy.neihan.mvp.presenter;
 
 import android.app.Application;
+import android.support.v4.app.Fragment;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.integration.AppManager;
+import com.jess.arms.mvp.BasePresenter;
+import com.zwy.neihan.NeiHanConfig;
+import com.zwy.neihan.app.utils.RxUtils;
+import com.zwy.neihan.mvp.contract.MainTab1Contract;
+import com.zwy.neihan.mvp.model.entity.HomeTabBean;
+import com.zwy.neihan.mvp.ui.fragment.EssenceFragment;
+import com.zwy.neihan.mvp.ui.fragment.FriendsCircleFragment;
+import com.zwy.neihan.mvp.ui.fragment.HomeObjectTabFragment;
+import com.zwy.neihan.mvp.ui.fragment.SubscribeFragment;
 
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import com.zwy.neihan.mvp.contract.MainTab1Contract;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 
 /**
@@ -38,6 +52,58 @@ public class MainTab1Presenter extends BasePresenter<MainTab1Contract.Model, Mai
         this.mApplication = application;
         this.mImageLoader = imageLoader;
         this.mAppManager = appManager;
+    }
+
+
+    public void getTabs() {
+        mModel.getTabs()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(NeiHanConfig.NETWORK_RETRY_TIMES, NeiHanConfig.NETWORK_RETRY_DELAYSECOND))
+                .doOnSubscribe(disposable ->
+                        mRootView.showLoading())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() ->
+                        mRootView.hideLoading()
+                )
+                .compose(RxUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<ArrayList<HomeTabBean>>(mErrorHandler) {
+                    @Override
+                    public void onNext(@NonNull ArrayList<HomeTabBean> homeTabBeen) {
+                        setData(homeTabBeen);
+                    }
+                });
+    }
+
+    private void setData(ArrayList<HomeTabBean> homeTabBeen) {
+        if (homeTabBeen == null || homeTabBeen.size() == 0) return;
+
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        String[] strs = new String[homeTabBeen.size()];
+
+        for (int i = 0; i < homeTabBeen.size(); i++) {
+            String tabName = homeTabBeen.get(i).getName();
+            if (tabName.equals("直播")) {
+                strs[i] = tabName;
+                fragments.add(SubscribeFragment.newInstance());
+                continue;
+            }
+            if (tabName.equals("精华")) {
+                strs[i] = tabName;
+                fragments.add(EssenceFragment.newInstance());//精华
+                continue;
+            }
+
+            if (tabName.equals("游戏")) {
+                strs[i] = tabName;
+                fragments.add(FriendsCircleFragment.newInstance());//段友圈
+                continue;
+            }
+            strs[i] = tabName;
+            fragments.add(HomeObjectTabFragment.newInstance(homeTabBeen.get(i)));
+
+        }
+        mRootView.setDataToTab(fragments,strs);
     }
 
     @Override

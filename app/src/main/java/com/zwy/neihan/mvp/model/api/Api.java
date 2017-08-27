@@ -5,6 +5,6 @@ package com.zwy.neihan.mvp.model.api;
  * contact with jess.yan.effort@gmail.com
  */
 public interface Api {
-    String APP_DOMAIN = "http://tj.nineton.cn";
-    String RequestSuccess = "OK";
+    String APP_DOMAIN = "http://uuu.snssdk.com";
+    String RequestSuccess = "success";
 }

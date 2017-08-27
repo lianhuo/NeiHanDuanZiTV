@@ -13,16 +13,16 @@ import java.io.Serializable;
  */
 
 public class BaseJson<T> implements Serializable{
-    private T weather;
-    private String status;
+    private T data;
+    private String message;
     private String msg;
 
     public T getData() {
-        return weather;
+        return data;
     }
 
     public String getCode() {
-        return status;
+        return message;
     }
 
     public String getMsg() {
@@ -34,7 +34,7 @@ public class BaseJson<T> implements Serializable{
      * @return
      */
     public boolean isSuccess() {
-        if (status.equals(Api.RequestSuccess)) {
+        if (message.equals(Api.RequestSuccess)) {
             return true;
         } else {
             return false;

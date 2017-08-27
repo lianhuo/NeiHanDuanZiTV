@@ -20,13 +20,14 @@ import com.zwy.neihan.R;
 import com.zwy.neihan.di.component.DaggerMainTab1Component;
 import com.zwy.neihan.di.module.MainTab1Module;
 import com.zwy.neihan.mvp.contract.MainTab1Contract;
+import com.zwy.neihan.mvp.model.entity.HomeTabBean;
 import com.zwy.neihan.mvp.presenter.MainTab1Presenter;
 import com.zwy.neihan.mvp.ui.adapter.PageAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -41,10 +42,6 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements MainTab1Contract.View, OnShowLoadingListener {
 
 
-    @BindView(R.id.ab_iv_user)
-    ImageView mAbIvUser;
-    @BindView(R.id.iv_ab_publish)
-    ImageView mIvAbPublish;
     @BindView(R.id.tab)
     SlidingTabLayout mTab;
     @BindView(R.id.vp_home)
@@ -74,36 +71,7 @@ public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        String[] strs = new String[]{"推荐", "视频", "段友秀", "图片", "段子", "订阅", "精华", "同城", "段友圈"};
-
-        fragments.add(HomeObjectTabFragment.newInstance(0));//推荐
-        fragments.add(HomeObjectTabFragment.newInstance(1));//视频
-        fragments.add(HomeObjectTabFragment.newInstance(2));//段友秀
-        fragments.add(HomeObjectTabFragment.newInstance(3));//图片
-        fragments.add(HomeObjectTabFragment.newInstance(4));//段子
-
-        fragments.add(SubscribeFragment.newInstance());//订阅
-        fragments.add(EssenceFragment.newInstance());//精华
-        fragments.add(CityWideFragment.newInstance());//同城
-        fragments.add(FriendsCircleFragment.newInstance());//段友圈
-
-        PageAdapter pageAdapter = new PageAdapter(getActivity().getSupportFragmentManager(), fragments, strs);
-
-        mVp.setAdapter(pageAdapter);
-
-        mTab.setViewPager(mVp, strs);
-        mTab.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                mVp.setCurrentItem(position);
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-            }
-        });
-        mVp.setCurrentItem(0);
+        mPresenter.getTabs();
     }
 
     /**
@@ -158,18 +126,33 @@ public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements
 
     }
 
-    @OnClick({R.id.ab_iv_user, R.id.iv_ab_publish, R.id.iv_refresh})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ab_iv_user:
-                showMessage("用户个人中心");
-                break;
-            case R.id.iv_ab_publish:
-                showMessage("投稿");
-                break;
-            case R.id.iv_refresh:
-                showMessage("刷新");
-                break;
-        }
+    /**
+     * 设置tabs数据
+     *
+     * @param fragments
+     * @param strs
+     */
+    @Override
+    public void setDataToTab(List<Fragment> fragments, String[] strs) {
+        PageAdapter pageAdapter = new PageAdapter(getActivity().getSupportFragmentManager(), fragments, strs);
+
+        mVp.setAdapter(pageAdapter);
+
+        mTab.setViewPager(mVp, strs);
+        mTab.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                mVp.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+            }
+        });
+        mVp.setCurrentItem(1);
+
+
+        // TODO: 2017/8/27 多创建的fm预留第二页面使用
+//        fragments.add(CityWideFragment.newInstance());//同城
     }
 }

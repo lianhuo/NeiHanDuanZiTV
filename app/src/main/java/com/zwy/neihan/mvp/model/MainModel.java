@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class MainModel extends BaseModel implements MainContract.Model {
     private Gson mGson;
     private Application mApplication;
-    private String[] mTitles = {"首页", "发现", "","审核", "消息"};
+    private String[] mTitles = {"首页", "段友秀", "","发现", "我的"};
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     @Inject
     public MainModel(IRepositoryManager repositoryManager, Gson gson, Application application) {
@@ -59,10 +59,10 @@ public class MainModel extends BaseModel implements MainContract.Model {
 
 
         int[] mIconUnselectIds = {
-                R.mipmap.ic_tab_home_normal, R.mipmap.ic_tab_discovery_normal,R.drawable.senderselector,
+                R.mipmap.ic_tab_home_normal, R.mipmap.ic_tab_discovery_normal,R.drawable.centerbtselector,
                 R.mipmap.ic_tab_audit_normal, R.mipmap.ic_tab_msg_normal};
         int[] mIconSelectIds = {
-                R.mipmap.ic_tab_home_pressed, R.mipmap.ic_tab_discovery_pressed,R.drawable.senderselector,
+                R.mipmap.ic_tab_home_pressed, R.mipmap.ic_tab_discovery_pressed,R.drawable.centerbtselector,
                 R.mipmap.ic_tab_audit_pressed, R.mipmap.ic_tab_msg_pressed};
         ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
         for (int i = 0; i < mFragments.size(); i++) {

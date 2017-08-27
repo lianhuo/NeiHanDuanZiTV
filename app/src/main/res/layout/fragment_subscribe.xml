@@ -10,5 +10,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="订阅"/>
+        android:text="直播"/>
 </com.zhy.autolayout.AutoLinearLayout>
