@@ -25,6 +25,10 @@ public class PageAdapter extends FragmentPagerAdapter {
         this.mTitles = mTitles;
     }
 
+    public String[] getTitles() {
+        return mTitles;
+    }
+
     @Override
     public int getCount() {
         return mFragments.size();

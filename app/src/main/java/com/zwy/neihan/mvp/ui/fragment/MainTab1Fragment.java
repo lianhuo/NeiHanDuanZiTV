@@ -3,7 +3,7 @@ package com.zwy.neihan.mvp.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +20,14 @@ import com.zwy.neihan.R;
 import com.zwy.neihan.di.component.DaggerMainTab1Component;
 import com.zwy.neihan.di.module.MainTab1Module;
 import com.zwy.neihan.mvp.contract.MainTab1Contract;
-import com.zwy.neihan.mvp.model.entity.HomeTabBean;
 import com.zwy.neihan.mvp.presenter.MainTab1Presenter;
+import com.zwy.neihan.mvp.ui.activity.MainActivity;
 import com.zwy.neihan.mvp.ui.adapter.PageAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -39,7 +39,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
-public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements MainTab1Contract.View, OnShowLoadingListener {
+public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements MainTab1Contract.View, OnShowLoadingListener, OnTabSelectListener {
 
 
     @BindView(R.id.tab)
@@ -129,30 +129,43 @@ public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements
     /**
      * 设置tabs数据
      *
-     * @param fragments
-     * @param strs
+     * @param pageAdapter
      */
     @Override
-    public void setDataToTab(List<Fragment> fragments, String[] strs) {
-        PageAdapter pageAdapter = new PageAdapter(getActivity().getSupportFragmentManager(), fragments, strs);
-
+    public void setAdapter(PageAdapter pageAdapter) {
         mVp.setAdapter(pageAdapter);
-
-        mTab.setViewPager(mVp, strs);
-        mTab.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                mVp.setCurrentItem(position);
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-            }
-        });
+        mTab.setViewPager(mVp, pageAdapter.getTitles());
         mVp.setCurrentItem(1);
 
+        mTab.setOnTabSelectListener(this);
+    }
 
-        // TODO: 2017/8/27 多创建的fm预留第二页面使用
-//        fragments.add(CityWideFragment.newInstance());//同城
+    /**
+     * 获取视图管理器
+     *
+     * @return
+     */
+    @Override
+    public FragmentManager getFMManager() {
+        return getActivity().getSupportFragmentManager();
+    }
+
+    @Override
+    public void onTabSelect(int position) {
+        mVp.setCurrentItem(position);
+    }
+
+    @Override
+    public void onTabReselect(int position) {
+
+    }
+
+    @OnClick({ R.id.iv_refresh})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_refresh:
+                showMessage("刷新");
+                break;
+        }
     }
 }

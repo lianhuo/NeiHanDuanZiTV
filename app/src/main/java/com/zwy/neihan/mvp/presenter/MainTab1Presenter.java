@@ -11,6 +11,7 @@ import com.zwy.neihan.NeiHanConfig;
 import com.zwy.neihan.app.utils.RxUtils;
 import com.zwy.neihan.mvp.contract.MainTab1Contract;
 import com.zwy.neihan.mvp.model.entity.HomeTabBean;
+import com.zwy.neihan.mvp.ui.adapter.PageAdapter;
 import com.zwy.neihan.mvp.ui.fragment.EssenceFragment;
 import com.zwy.neihan.mvp.ui.fragment.FriendsCircleFragment;
 import com.zwy.neihan.mvp.ui.fragment.HomeObjectTabFragment;
@@ -56,7 +57,7 @@ public class MainTab1Presenter extends BasePresenter<MainTab1Contract.Model, Mai
 
 
     public void getTabs() {
-        mModel.getTabs()
+        mModel.getHomeTabs()
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(NeiHanConfig.NETWORK_RETRY_TIMES, NeiHanConfig.NETWORK_RETRY_DELAYSECOND))
                 .doOnSubscribe(disposable ->
@@ -103,7 +104,7 @@ public class MainTab1Presenter extends BasePresenter<MainTab1Contract.Model, Mai
             fragments.add(HomeObjectTabFragment.newInstance(homeTabBeen.get(i)));
 
         }
-        mRootView.setDataToTab(fragments,strs);
+        mRootView.setAdapter(new PageAdapter(mRootView.getFMManager(), fragments, strs));
     }
 
     @Override

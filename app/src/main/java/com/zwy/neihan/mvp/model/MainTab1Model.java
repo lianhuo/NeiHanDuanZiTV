@@ -43,9 +43,30 @@ public class MainTab1Model extends BaseModel implements MainTab1Contract.Model {
      * @return
      */
     @Override
-    public Observable<ArrayList<HomeTabBean>> getTabs() {
+    public Observable<ArrayList<HomeTabBean>> getHomeTabs() {
         RetrofitUrlManager.getInstance().putDomain("tabs", "http://lf.snssdk.com");
-        return mRepositoryManager.obtainRetrofitService(CommonService.class).getHometabs()
+        return mRepositoryManager.obtainRetrofitService(CommonService.class).getHomeTabs(
+                "1",
+                "14204866276",
+                "38616036346",
+                "wifi",
+                "tengxun",
+                "7",
+                "alan",
+                "651",
+                "a",
+                "android",
+                "HUAWEI+C8818",
+                "HUAWEI",
+                "1",
+                "4.4.4",
+                "A00000599C2C37",
+                "36459bf17f34022b",
+                "651",
+                "720*1280",
+                "320",
+                "update_version_code"
+        )
                 .map(arrayListBaseJson -> {
                     return arrayListBaseJson.getData();
                 });

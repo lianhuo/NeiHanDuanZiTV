@@ -1,17 +1,29 @@
 package com.zwy.neihan.mvp.presenter;
 
 import android.app.Application;
+import android.support.v4.app.Fragment;
 
-import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
+import com.jess.arms.integration.AppManager;
+import com.jess.arms.mvp.BasePresenter;
+import com.zwy.neihan.NeiHanConfig;
+import com.zwy.neihan.app.utils.RxUtils;
+import com.zwy.neihan.mvp.contract.MainTab2Contract;
+import com.zwy.neihan.mvp.model.entity.HomeTabBean;
+import com.zwy.neihan.mvp.ui.adapter.PageAdapter;
+import com.zwy.neihan.mvp.ui.fragment.CityWideFragment;
 
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import com.zwy.neihan.mvp.contract.MainTab2Contract;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 
 /**
@@ -38,6 +50,39 @@ public class MainTab2Presenter extends BasePresenter<MainTab2Contract.Model, Mai
         this.mApplication = application;
         this.mImageLoader = imageLoader;
         this.mAppManager = appManager;
+    }
+
+    public void getTabs() {
+        mModel.getTab2Tabs()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(NeiHanConfig.NETWORK_RETRY_TIMES, NeiHanConfig.NETWORK_RETRY_DELAYSECOND))
+//                .doOnSubscribe(disposable ->
+//                        mRootView.showLoading())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+//                .doFinally(() ->
+//                        mRootView.hideLoading()
+//                )
+                .compose(RxUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<ArrayList<HomeTabBean>>(mErrorHandler) {
+                    @Override
+                    public void onNext(@NonNull ArrayList<HomeTabBean> homeTabBeen) {
+                        setData(homeTabBeen);
+                    }
+                });
+    }
+
+    private void setData(ArrayList<HomeTabBean> homeTabBeen) {
+        if (homeTabBeen == null || homeTabBeen.size() == 0) return;
+
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        String[] strs = new String[homeTabBeen.size()];
+
+        for (int i = 0; i < homeTabBeen.size(); i++) {
+            strs[i] = homeTabBeen.get(i).getName();
+            fragments.add(CityWideFragment.newInstance(homeTabBeen.get(i)));
+        }
+        mRootView.setAdapter(new PageAdapter(mRootView.getFMManager(), fragments, strs));
     }
 
     @Override
