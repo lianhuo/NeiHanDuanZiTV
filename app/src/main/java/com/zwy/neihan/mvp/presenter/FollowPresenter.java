@@ -1,7 +1,6 @@
 package com.zwy.neihan.mvp.presenter;
 
 import android.app.Application;
-import android.support.v4.app.Fragment;
 
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
@@ -12,31 +11,26 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
 
-import com.zwy.neihan.mvp.contract.MainTab3Contract;
-import com.zwy.neihan.mvp.model.entity.HomeTabBean;
-import com.zwy.neihan.mvp.ui.adapter.PageAdapter;
-import com.zwy.neihan.mvp.ui.fragment.CityWideFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.zwy.neihan.mvp.contract.FollowContract;
 
 
 /**
  * ================================================================
- * 创建时间:2017-8-26 23:41:43
+ * 创建时间:2017-8-27 15:03:39
  * 创建人:Alan
- * 文件描述：xxxxxx控制器
+ * 文件描述：发现tab里的关注tab控制器
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
 @ActivityScope
-public class MainTab3Presenter extends BasePresenter<MainTab3Contract.Model, MainTab3Contract.View> {
+public class FollowPresenter extends BasePresenter<FollowContract.Model, FollowContract.View> {
     private RxErrorHandler mErrorHandler;
     private Application mApplication;
     private ImageLoader mImageLoader;
     private AppManager mAppManager;
+
     @Inject
-    public MainTab3Presenter(MainTab3Contract.Model model, MainTab3Contract.View rootView
+    public FollowPresenter(FollowContract.Model model, FollowContract.View rootView
             , RxErrorHandler handler, Application application
             , ImageLoader imageLoader, AppManager appManager) {
         super(model, rootView);
@@ -44,10 +38,6 @@ public class MainTab3Presenter extends BasePresenter<MainTab3Contract.Model, Mai
         this.mApplication = application;
         this.mImageLoader = imageLoader;
         this.mAppManager = appManager;
-    }
-
-    public void getTabs() {
-        mRootView.setAdapter(new PageAdapter(mRootView.getFMManager(), mModel.getFragments(), mModel.getTitle()));
     }
 
     @Override

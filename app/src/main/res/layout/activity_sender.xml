@@ -5,6 +5,35 @@
                                      android:background="@color/white"
                                      android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_85"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:padding="@dimen/dp_7"
+            android:src="@mipmap/uw"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="@string/text_sender"
+            android:textColor="@color/bg_hot_comment"
+            android:textSize="@dimen/sp_15"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
