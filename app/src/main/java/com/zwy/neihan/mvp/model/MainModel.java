@@ -46,6 +46,8 @@ public class MainModel extends BaseModel implements MainContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+        this.mTitles=null;
+        this.mFragments=null;
     }
 
     /**

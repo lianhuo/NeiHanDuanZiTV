@@ -42,6 +42,8 @@ public interface Styleable {
 
     BuildBean setCancelable(boolean cancelable, boolean outsideCancelable);
 
+    void cycle();
+
 
 
 

@@ -48,7 +48,6 @@ public class MainTab2Fragment extends BaseFragment<MainTab2Presenter> implements
     ImageView mIvRefresh2;
     @BindView(R.id.iv_submit)
     ImageView mIvSubmit;
-    Unbinder unbinder;
 
     public static MainTab2Fragment newInstance() {
         MainTab2Fragment fragment = new MainTab2Fragment();

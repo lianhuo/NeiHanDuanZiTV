@@ -179,6 +179,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+        this.mFragments = null;
     }
 
 

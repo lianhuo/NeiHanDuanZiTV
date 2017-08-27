@@ -37,14 +37,8 @@ public class BuildBean implements Styleable {
      * 构建dialog的类型
      */
     public int type;
-    public boolean isVertical;
-
-    public View customView;
 
     public int gravity;
-    public int dateType;
-    public long date;
-    public String dateTitle;
     public int tag;
 
     public CharSequence title;
@@ -52,11 +46,6 @@ public class BuildBean implements Styleable {
     public CharSequence text1 = CommonConfig.dialogui_btnTxt1;
     public CharSequence text2 = CommonConfig.dialogui_btnTxt2;
     public CharSequence text3;
-    public CharSequence bottomTxt = CommonConfig.dialogui_bottomTxt;
-
-    public CharSequence hint1;
-    public CharSequence hint2;
-
 
     public DialogUIListener listener;
 
@@ -74,22 +63,6 @@ public class BuildBean implements Styleable {
     public boolean outsideTouchable = true;
 
     public Dialog dialog;
-    public AlertDialog alertDialog;
-
-
-    public int viewHeight;
-
-
-    //各类对话框特有的参数
-    public CharSequence[] wordsMd;
-    public int defaultChosen;//
-    public boolean[] checkedItems;
-
-    //bottomsheet
-    public int gridColumns = 4;
-
-
-    //样式
 
     //三个以下按钮,颜色按此顺序
     @ColorRes
@@ -117,7 +90,6 @@ public class BuildBean implements Styleable {
     public int msgTxtSize = 14;
     public int itemTxtSize = 14;
     public int inputTxtSize = 14;
-
 
     @Override
     public BuildBean setBtnColor(@ColorRes int btn1Color, @ColorRes int btn2Color, @ColorRes int btn3Color) {
@@ -268,6 +240,15 @@ public class BuildBean implements Styleable {
         this.outsideTouchable = outsideCancelable;
         return this;
     }
+
+
+    @Override
+    public void cycle() {
+        dialog=null;
+        listener=null;
+        mContext=null;
+    }
+
 
 
 }

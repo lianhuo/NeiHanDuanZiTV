@@ -65,6 +65,7 @@ public final class AppManager {
     public List<Activity> mActivityList;
     //当前在前台的activity
     private Activity mCurrentActivity;
+    private BuildBean buildBean;
 
     @Inject
     public AppManager(Application application) {
@@ -135,8 +136,8 @@ public final class AppManager {
         showT(obj, b);
     }
 
-    private static Toast mToast;
-    private static Toast mToastBottom;
+    private Toast mToast;
+    private Toast mToastBottom;
 
     private void showT(String str, boolean isLong) {
         if (mToastBottom == null) {
@@ -241,7 +242,8 @@ public final class AppManager {
      * @param onShowLoadingListener 取消的监听
      */
     private void showLoading(CharSequence msg, boolean cancleable, OnShowLoadingListener onShowLoadingListener) {
-        mDialog = new BuildBean(mCurrentActivity, msg, cancleable, cancleable, true).show();
+        buildBean = new BuildBean(mCurrentActivity, msg, cancleable, cancleable, true);
+        mDialog = buildBean.show();
         mDialog.setOnCancelListener(dialog -> onShowLoadingListener.onCancel());
     }
 
@@ -291,6 +293,11 @@ public final class AppManager {
         mActivityList = null;
         mCurrentActivity = null;
         mApplication = null;
+        buildBean.cycle();
+        buildBean = null;
+        mDialog = null;
+        mToast = null;
+        mToastBottom = null;
     }
 
     /**
@@ -458,7 +465,11 @@ public final class AppManager {
             ActivityManager activityMgr =
                     (ActivityManager) mApplication.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.killBackgroundProcesses(mApplication.getPackageName());
+            release();
             System.exit(0);
+            for (int i = 0; i < 100; i++) {
+                System.gc();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

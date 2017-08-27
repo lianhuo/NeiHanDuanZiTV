@@ -120,4 +120,10 @@ public class CityWideFragment extends BaseFragment<CityWidePresenter> implements
     public void onCancel() {
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mTabBean=null;
+    }
 }

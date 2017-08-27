@@ -45,7 +45,6 @@ public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> 
         return fragment;
     }
 
-
     @SuppressLint("ValidFragment")
     private HomeObjectTabFragment(HomeTabBean homeTabBean) {
         this.homeTabBean = homeTabBean;
@@ -121,5 +120,10 @@ public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> 
     @Override
     public void onCancel() {
 
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        homeTabBean=null;
     }
 }
