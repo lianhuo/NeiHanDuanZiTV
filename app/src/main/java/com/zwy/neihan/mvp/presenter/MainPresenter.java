@@ -164,7 +164,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
         //设置未读消息背景
         mTablayout.showMsg(3, 5);
-        mTablayout.setMsgMargin(3, -1, 0);
+        mTablayout.setMsgMargin(3, -1, 5);
 
         MsgView rtv_2_3 = mTablayout.getMsgView(3);
         if (rtv_2_3 != null) {
