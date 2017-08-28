@@ -11,12 +11,12 @@ ext {
 
             compileSdkVersion          : 26,
             buildToolsVersion          : "26.0.1",
-            minSdkVersion              : 15,
+            minSdkVersion              : 16,
             targetSdkVersion           : 26,
             versionCode                : 1,
             versionName                : "1.0.0.0"
-    ]
 
+    ]
     version = [
             androidSupportSdkVersion  : "25.4.0",
             retrofitSdkVersion        : "2.3.0",
@@ -32,6 +32,8 @@ ext {
             MPAndroidChartVersion     : "v3.0.2",
             ucropVersion              : "2.2.1",
             zxingVersion              : "3.2.1",
+            ninegridviewVersion       : "0.2.0",
+            jiecaoVideoPlayVersion    : "5.8.1"
     ]
 
     dependencies = [
@@ -100,9 +102,10 @@ ext {
             "javax.annotation"             : "javax.annotation:jsr250-api:1.0",
             "arouter"                      : "com.alibaba:arouter-api:1.2.1.1",
             "arouter-compiler"             : "com.alibaba:arouter-compiler:1.1.2.1",
-            "progressmanager"              : "me.jessyan:progressmanager:+",
-            "retrofit-url-manager"         : "me.jessyan:retrofit-url-manager:+",
-
+            "progressmanager"              : "me.jessyan:progressmanager:+",//全局请求进度管理
+            "retrofit-url-manager"         : "me.jessyan:retrofit-url-manager:+",//动态改变BaseURL
+            "nineGridView"                 : "com.lzy.widget:ninegridview:${version["ninegridviewVersion"]}",//九图预览
+            "jiecaoVideoPlay"              : "fm.jiecao:jiecaovideoplayer:${version["jiecaoVideoPlayVersion"]}",
             //test
             "junit"                        : "junit:junit:4.12",
             "androidJUnitRunner"           : "android.support.test.runner.AndroidJUnitRunner",

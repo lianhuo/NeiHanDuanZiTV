@@ -22,7 +22,7 @@
     <color name="simple_333333">#ff333333</color>
     <color name="transparent">#00000000</color>
     <color name="simple_eeeeee">#ffeeeeee</color>
-    <color name="simple_cccccc">#ffcccccc</color>
+    <color name="simple_cccccc">#dfdfdf</color>
     <color name="pull_to_refresh_label_color">#ff575757</color>
     <color name="dot_bg">#00ff0000</color>
     <color name="dot_unselect_color">#50ffffff</color>

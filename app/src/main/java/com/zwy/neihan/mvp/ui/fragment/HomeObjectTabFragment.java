@@ -1,13 +1,15 @@
 package com.zwy.neihan.mvp.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -19,8 +21,13 @@ import com.zwy.neihan.di.module.HomeObjectTabModule;
 import com.zwy.neihan.mvp.contract.HomeObjectTabContract;
 import com.zwy.neihan.mvp.model.entity.HomeTabBean;
 import com.zwy.neihan.mvp.presenter.HomeObjectTabPresenter;
+import com.zwy.neihan.mvp.ui.adapter.MainTab1Adapter;
+import com.zwy.neihan.mvp.ui.widget.TipsView;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -36,9 +43,10 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> implements HomeObjectTabContract.View, OnCancelListener {
 
 
-    @BindView(R.id.tv)
-    TextView mTv;
+    @BindView(R.id.rv_tab1_object)
+    RecyclerView mRecyclerView;
     private HomeTabBean homeTabBean;
+    private TipsView mTipsView;
 
     public static HomeObjectTabFragment newInstance(HomeTabBean homeTabBean) {
         HomeObjectTabFragment fragment = new HomeObjectTabFragment(homeTabBean);
@@ -67,7 +75,14 @@ public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> 
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        mTv.setText(String.valueOf( homeTabBean.getName()));
+        initRecycleView();
+        // TODO: 2017/8/28 每次均清除缓存  因为缓存有bug，缓存有效期超时后重新拉取数据会返回 retry。
+        mPresenter.getData(homeTabBean, (long) 0, true, 20);
+
+    }
+
+    private void initRecycleView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     /**
@@ -89,12 +104,14 @@ public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> 
 
     @Override
     public void showLoading() {
-        ArmsUtils.showLoading("加载中...", true, this);
+        if (homeTabBean.getName().equals("推荐"))
+            ArmsUtils.showLoading("加载中...", true, this);
     }
 
     @Override
     public void hideLoading() {
-        ArmsUtils.dissMissLoading();
+        if (homeTabBean.getName().equals("推荐"))
+            ArmsUtils.dissMissLoading();
     }
 
     @Override
@@ -121,9 +138,46 @@ public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> 
     public void onCancel() {
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        homeTabBean=null;
+        homeTabBean = null;
+        try {
+            mTipsView.destroy();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mTipsView = null;
     }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public void setAdapter(MainTab1Adapter mainTab1Adapter) {
+        mRecyclerView.setAdapter(mainTab1Adapter);
+    }
+
+    /**
+     * 刷新后的红条通知
+     *
+     * @param msg
+     * @param isPlaySound 是否播放声音
+     */
+    @Override
+    public void showNewDataToast(String msg, boolean isPlaySound) {
+        if (homeTabBean.getName().equals("推荐"))
+            mTipsView = TipsView.init(new WeakReference<Context>(getActivity().getApplicationContext()).get(), msg, isPlaySound).showNewDataToast();
+    }
+
+    @Override
+    public int getEmptyView() {
+        return R.layout.nulldataview;
+    }
+
 }

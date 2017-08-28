@@ -14,7 +14,7 @@ import com.jess.arms.widget.dialog.loading.OnCancelListener;
 import com.jess.arms.widget.tablayout.listener.CustomTabEntity;
 import com.zwy.neihan.R;
 import com.zwy.neihan.app.utils.DBUtils;
-import com.zwy.neihan.dbtabs.User;
+import com.zwy.neihan.app.dbtabs.User;
 import com.zwy.neihan.di.component.DaggerMainComponent;
 import com.zwy.neihan.di.module.MainModule;
 import com.zwy.neihan.mvp.contract.MainContract;
@@ -25,6 +25,7 @@ import com.zwy.neihan.mvp.ui.widget.MyTabHost;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 

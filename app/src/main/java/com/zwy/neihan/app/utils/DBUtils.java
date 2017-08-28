@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.jess.arms.base.App;
 import com.zwy.neihan.NeiHanConfig;
-import com.zwy.neihan.dbtabs.User;
-import com.zwy.neihan.greendao.DaoSession;
+import com.zwy.neihan.app.dbtabs.User;
+import com.zwy.neihan.app.greendao.DaoSession;
 
 
 /**

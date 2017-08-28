@@ -3,6 +3,8 @@ package com.zwy.neihan.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,15 +12,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 import com.jess.arms.base.App;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
+import com.jess.arms.http.imageloader.glide.GlideArms;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.MVPException;
@@ -29,13 +37,15 @@ import com.jess.arms.widget.boxing.BoxingCrop;
 import com.jess.arms.widget.boxing.BoxingMediaLoader;
 import com.jess.arms.widget.boxing.tool.BoxingGlideLoader;
 import com.jess.arms.widget.boxing.tool.BoxingUcrop;
+import com.lzy.ninegrid.NineGridView;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.zwy.neihan.NeiHanConfig;
 import com.zwy.neihan.R;
+import com.zwy.neihan.app.greendao.DaoMaster;
 import com.zwy.neihan.app.utils.DBUtils;
-import com.zwy.neihan.greendao.DaoMaster;
 import com.zwy.neihan.mvp.model.api.Api;
+import com.zwy.neihan.mvp.model.entity.BaseJson;
 
 import org.json.JSONException;
 
@@ -44,9 +54,11 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 import me.jessyan.progressmanager.ProgressManager;
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.HttpException;
@@ -61,13 +73,13 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * Contact with jess.yan.effort@gmail.com
  */
 public final class GlobalConfiguration implements ConfigModule {
-//    public static String sDomain = Api.APP_DOMAIN;
+
+    public static final int ListAnim = BaseQuickAdapter.ALPHAIN;//配置全局的list加载动画
 
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
         if (!NeiHanConfig.LOG_DEBUG) //Release 时,让框架不再打印 Http 请求和响应的信息
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
-
         builder.baseurl(Api.APP_DOMAIN)
                 //如果 BaseUrl 在 App 启动时不能确定,需要请求服务器接口动态获取,请使用以下代码
                 //并且使用 Okhttp (AppComponent中提供) 请求服务器获取到正确的 BaseUrl 后赋值给 GlobalConfiguration.sDomain
@@ -103,22 +115,31 @@ public final class GlobalConfiguration implements ConfigModule {
                         create a new request and modify it accordingly using the new token
                         Request newRequest = chain.request().newBuilder().header("token", newToken)
                                              .build();
-
                         retry the request
 
                         response.body().close();
                         如果使用okhttp将新的请求,请求成功后,将返回的response  return出去即可
                         如果不需要返回新的结果,则直接把response参数返回出去 */
 
-                        // TODO: 2017/8/21 后台返回数据确定后需要开启此处
-//                        if (TextUtils.isEmpty(httpResult)) {
-//                            throw new MVPException("服务端返回空字符串");
-//                        } else {
-//                            BaseJson baseJson = new Gson().fromJson(httpResult, BaseJson.class);
-//                            if (!baseJson.isSuccess()) {
-//                                throw new MVPException(baseJson.getMsg());
-//                            }
-//                        }
+                            if (!TextUtils.isEmpty(httpResult)){
+
+                                try {
+                                    BaseJson baseJson = new Gson().fromJson(httpResult, BaseJson.class);
+                                    if (!baseJson.isSuccess()) {
+                                        if (baseJson.getCode().equals("retry")){
+                                            response.body().close();
+                                            Request newRequest = chain.request().newBuilder()
+                                                    .build();
+                                            Timber.e("正在发起重试");
+                                        }else {
+                                            throw new MVPException(baseJson.getCode());
+                                        }
+                                    }
+                                } catch (JsonSyntaxException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
                         return response;
 
                     }
@@ -224,6 +245,19 @@ public final class GlobalConfiguration implements ConfigModule {
                 DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(context, NeiHanConfig.DBNAME);
                 ArmsUtils.obtainAppComponentFromContext(application).extras().put(NeiHanConfig.DBNAME, new DaoMaster(openHelper.getWritableDb()).newSession());
                 DBUtils.getInstance(application);
+
+                //初始化九图预览工具
+                NineGridView.setImageLoader(new NineGridView.ImageLoader() {
+                    @Override
+                    public void onDisplayImage(Context context, ImageView imageView, String url) {
+                        GlideArms.with(context).load(url).centerCrop().placeholder(ArmsUtils.getDrawablebyResource(context, R.drawable.defaultimage)).into(imageView);
+                    }
+
+                    @Override
+                    public Bitmap getCacheImage(String url) {
+                        return BitmapFactory.decodeFile(GlideArms.getPhotoCacheDir(application.getApplicationContext(), url).getPath());
+                    }
+                });
             }
 
             @Override

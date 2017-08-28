@@ -20,7 +20,7 @@
     <com.zwy.neihan.mvp.ui.widget.MyTabHost
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_100"
+        android:layout_height="@dimen/px_120"
         android:background="#ffffff"
         tl:tl_iconHeight="@dimen/dp_20"
         tl:tl_indicator_color="#2C97DE"

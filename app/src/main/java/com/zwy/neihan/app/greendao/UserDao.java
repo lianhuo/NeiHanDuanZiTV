@@ -1,4 +1,4 @@
-package com.zwy.neihan.greendao;
+package com.zwy.neihan.app.greendao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;

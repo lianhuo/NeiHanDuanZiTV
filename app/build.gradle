@@ -112,7 +112,9 @@ dependencies {
     }
     compile rootProject.ext.dependencies["paginate"]
     compile rootProject.ext.dependencies["greendao"]
-
+    compile rootProject.ext.dependencies["nineGridView"]
+    compile rootProject.ext.dependencies["jiecaoVideoPlay"]
+    compile rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
     //arms
     compile project(':MvpTools')
 //    compile 'me.jessyan:arms:2.1.5'

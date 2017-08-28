@@ -1,4 +1,4 @@
-package com.zwy.neihan.dbtabs;
+package com.zwy.neihan.app.dbtabs;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

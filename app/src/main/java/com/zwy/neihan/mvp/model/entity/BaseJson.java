@@ -17,6 +17,15 @@ public class BaseJson<T> implements Serializable{
     private String message;
     private String msg;
 
+    @Override
+    public String toString() {
+        return "BaseJson{" +
+                "data=" + data +
+                ", message='" + message + '\'' +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
+
     public T getData() {
         return data;
     }
