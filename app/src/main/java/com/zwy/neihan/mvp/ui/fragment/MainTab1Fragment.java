@@ -13,21 +13,28 @@ import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.widget.boxing.impl.view.HackyViewPager;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 import com.jess.arms.widget.tablayout.SlidingTabLayout;
 import com.jess.arms.widget.tablayout.listener.OnTabSelectListener;
 import com.zwy.neihan.R;
+import com.zwy.neihan.app.utils.DBUtils;
 import com.zwy.neihan.di.component.DaggerMainTab1Component;
 import com.zwy.neihan.di.module.MainTab1Module;
 import com.zwy.neihan.mvp.contract.MainTab1Contract;
 import com.zwy.neihan.mvp.presenter.MainTab1Presenter;
+import com.zwy.neihan.mvp.ui.activity.GuideActivity;
 import com.zwy.neihan.mvp.ui.activity.MainActivity;
 import com.zwy.neihan.mvp.ui.adapter.PageAdapter;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -39,7 +46,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
-public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements MainTab1Contract.View, OnShowLoadingListener, OnTabSelectListener {
+public class MainTab1Fragment extends BaseFragment<MainTab1Presenter> implements MainTab1Contract.View, OnCancelListener, OnTabSelectListener {
 
 
     @BindView(R.id.tab)

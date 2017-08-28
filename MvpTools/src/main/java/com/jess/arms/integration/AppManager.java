@@ -3,7 +3,6 @@ package com.jess.arms.integration;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,13 +19,14 @@ import com.jess.arms.R;
 import com.jess.arms.widget.dialog.alertview.AlertView;
 import com.jess.arms.widget.dialog.alertview.OnClickListener;
 import com.jess.arms.widget.dialog.alertview.OnItemClickListener;
-import com.jess.arms.widget.dialog.loading.BuildBean;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.LoadingView;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +65,12 @@ public final class AppManager {
     public List<Activity> mActivityList;
     //当前在前台的activity
     private Activity mCurrentActivity;
-    private BuildBean buildBean;
+
+    private Toast mToast;
+    private Toast mToastBottom;
+    //    private Dialog mDialog = null;
+    private LoadingView mLoadingView;
+    private View toastView;
 
     @Inject
     public AppManager(Application application) {
@@ -111,7 +116,7 @@ public final class AppManager {
                 Bundle bundle_l = message.getData();
                 if (bundle_l == null) return;
                 showLoading(bundle_l.getString("msg"),
-                        bundle_l.getBoolean("cancleable"), (OnShowLoadingListener) message.obj);
+                        bundle_l.getBoolean("cancleable"), (OnCancelListener) message.obj);
                 break;
             case DISSMISSLOADING:
                 dissMissLoadingDialog();
@@ -136,16 +141,13 @@ public final class AppManager {
         showT(obj, b);
     }
 
-    private Toast mToast;
-    private Toast mToastBottom;
-
     private void showT(String str, boolean isLong) {
         if (mToastBottom == null) {
             mToastBottom = Toast.makeText(mApplication.getApplicationContext(), str, isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
             LayoutInflater inflate = (LayoutInflater)
                     mApplication.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflate.inflate(R.layout.dialogui_toast, null);
-            mToastBottom.setView(view);
+            toastView = inflate.inflate(R.layout.dialogui_toast, null);
+            mToastBottom.setView(toastView);
             mToastBottom.setGravity(Gravity.BOTTOM, 0, mApplication.getResources().getDimensionPixelSize(R.dimen.dialogui_toast_margin));
         }
         mToast = mToastBottom;
@@ -237,25 +239,23 @@ public final class AppManager {
     /**
      * 展示一个简易进度条
      *
-     * @param msg                   显示的文本内容
-     * @param cancleable            是否可手动关闭
-     * @param onShowLoadingListener 取消的监听
+     * @param msg              显示的文本内容
+     * @param cancleable       是否可手动关闭
+     * @param onCancelListener 取消的监听
      */
-    private void showLoading(CharSequence msg, boolean cancleable, OnShowLoadingListener onShowLoadingListener) {
-        buildBean = new BuildBean(mCurrentActivity, msg, cancleable, cancleable, true);
-        mDialog = buildBean.show();
-        mDialog.setOnCancelListener(dialog -> onShowLoadingListener.onCancel());
+    private void showLoading(CharSequence msg, boolean cancleable, OnCancelListener onCancelListener) {
+        mLoadingView = LoadingView.init(new WeakReference<Activity>(mCurrentActivity).get()).showLoading(msg, cancleable);
+        if (onCancelListener != null) {
+            mLoadingView.setOnCancelListener(() -> onCancelListener.onCancel());
+        }
     }
 
-    private Dialog mDialog = null;
 
     private void dissMissLoadingDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            try {
-                mDialog.dismiss();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            mLoadingView.dissMissDialog();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -284,21 +284,6 @@ public final class AppManager {
         startActivity(new Intent(mApplication, activityClass));
     }
 
-    /**
-     * 释放资源
-     */
-    public void release() {
-        EventBus.getDefault().unregister(this);
-        mActivityList.clear();
-        mActivityList = null;
-        mCurrentActivity = null;
-        mApplication = null;
-        buildBean.cycle();
-        buildBean = null;
-        mDialog = null;
-        mToast = null;
-        mToastBottom = null;
-    }
 
     /**
      * 将在前台的activity保存
@@ -440,10 +425,6 @@ public final class AppManager {
      * 关闭所有activity
      */
     public void killAll() {
-//        while (getActivityList().size() != 0) { //此方法只能兼容LinkedList
-//            getActivityList().remove(0).finish();
-//        }
-
         Iterator<Activity> iterator = getActivityList().iterator();
         while (iterator.hasNext()) {
             Activity next = iterator.next();
@@ -453,6 +434,21 @@ public final class AppManager {
 
     }
 
+    /**
+     * 释放资源
+     */
+    public void release() {
+        EventBus.getDefault().unregister(this);
+        mActivityList.clear();
+        mActivityList = null;
+        mCurrentActivity = null;
+        mApplication = null;
+        toastView = null;
+//        mDialog = null;
+        this.mLoadingView = null;
+        mToast = null;
+        mToastBottom = null;
+    }
 
     /**
      * 退出应用程序

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 import com.zwy.neihan.di.component.DaggerFriendsCircleComponent;
 import com.zwy.neihan.di.module.FriendsCircleModule;
 import com.zwy.neihan.mvp.contract.FriendsCircleContract;
@@ -28,7 +28,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
-public class FriendsCircleFragment extends BaseFragment<FriendsCirclePresenter> implements FriendsCircleContract.View, OnShowLoadingListener {
+public class FriendsCircleFragment extends BaseFragment<FriendsCirclePresenter> implements FriendsCircleContract.View, OnCancelListener {
 
 
     public static FriendsCircleFragment newInstance() {

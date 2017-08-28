@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 import com.zwy.neihan.di.component.DaggerSplashComponent;
 import com.zwy.neihan.di.module.SplashModule;
 import com.zwy.neihan.mvp.contract.SplashContract;
@@ -26,7 +26,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
-public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View, OnShowLoadingListener {
+public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View, OnCancelListener {
 
 
     @Override

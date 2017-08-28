@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 import com.zwy.neihan.R;
 import com.zwy.neihan.di.component.DaggerHomeObjectTabComponent;
 import com.zwy.neihan.di.module.HomeObjectTabModule;
@@ -33,7 +33,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================================
  */
 @SuppressLint("ValidFragment")
-public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> implements HomeObjectTabContract.View, OnShowLoadingListener {
+public class HomeObjectTabFragment extends BaseFragment<HomeObjectTabPresenter> implements HomeObjectTabContract.View, OnCancelListener {
 
 
     @BindView(R.id.tv)

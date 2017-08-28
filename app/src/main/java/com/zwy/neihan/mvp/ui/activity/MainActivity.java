@@ -10,7 +10,7 @@ import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.widget.boxing.impl.view.HackyViewPager;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 import com.jess.arms.widget.tablayout.listener.CustomTabEntity;
 import com.zwy.neihan.R;
 import com.zwy.neihan.app.utils.DBUtils;
@@ -36,7 +36,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
-public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, OnShowLoadingListener {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, OnCancelListener {
 
 
     @BindView(R.id.vp)

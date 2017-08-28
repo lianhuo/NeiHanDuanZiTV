@@ -1,6 +1,5 @@
 package com.jess.arms.widget.dialog.loading;
 
-import android.app.Dialog;
 
 /**
  * ================================================================
@@ -10,7 +9,7 @@ import android.app.Dialog;
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
-public interface OnShowLoadingListener {
+public interface OnCancelListener {
     /**
      * 当进度条被取消时调用
      */

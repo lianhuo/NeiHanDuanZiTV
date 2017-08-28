@@ -13,7 +13,7 @@ import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.widget.boxing.impl.view.HackyViewPager;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 import com.jess.arms.widget.tablayout.SlidingTabLayout;
 import com.jess.arms.widget.tablayout.listener.OnTabSelectListener;
 import com.zwy.neihan.R;
@@ -37,7 +37,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
-public class MainTab2Fragment extends BaseFragment<MainTab2Presenter> implements MainTab2Contract.View, OnShowLoadingListener, OnTabSelectListener {
+public class MainTab2Fragment extends BaseFragment<MainTab2Presenter> implements MainTab2Contract.View, OnCancelListener, OnTabSelectListener {
 
 
     @BindView(R.id.tab_tabs_2)

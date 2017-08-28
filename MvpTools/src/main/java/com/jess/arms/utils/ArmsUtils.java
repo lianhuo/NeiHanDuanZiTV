@@ -24,7 +24,7 @@ import com.jess.arms.base.App;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.widget.dialog.alertview.OnClickListener;
 import com.jess.arms.widget.dialog.alertview.OnItemClickListener;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 
 import org.simple.eventbus.EventBus;
 
@@ -271,12 +271,12 @@ public class ArmsUtils {
      *
      * @param msg             显示的文本内容
      * @param cancleable      是否可手动关闭
-     * @param loadingListener 取消的监听
+     * @param cancelListener 取消的监听
      */
-    public static void showLoading(CharSequence msg, boolean cancleable, OnShowLoadingListener loadingListener) {
+    public static void showLoading(CharSequence msg, boolean cancleable, OnCancelListener cancelListener) {
         Message message = new Message();
         message.what = SHOW_LOADING;
-        message.obj = loadingListener;
+        message.obj = cancelListener;
         Bundle bundle = new Bundle();
         bundle.putString("msg", msg.toString());
         bundle.putBoolean("cancleable", cancleable);

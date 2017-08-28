@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-import com.jess.arms.widget.dialog.loading.OnShowLoadingListener;
+import com.jess.arms.widget.dialog.loading.OnCancelListener;
 import com.zwy.neihan.di.component.DaggerEssenceComponent;
 import com.zwy.neihan.di.module.EssenceModule;
 import com.zwy.neihan.mvp.contract.EssenceContract;
@@ -28,7 +28,8 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * 看淡身边的虚伪，静心宁神做好自己。路那么长，无愧走好每一步。
  * ================================================================
  */
-public class EssenceFragment extends BaseFragment<EssencePresenter> implements EssenceContract.View, OnShowLoadingListener {
+public class EssenceFragment extends BaseFragment<EssencePresenter> implements EssenceContract.View, OnCancelListener
+{
 
 
     public static EssenceFragment newInstance() {
